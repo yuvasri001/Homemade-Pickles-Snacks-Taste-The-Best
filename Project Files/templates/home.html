@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HomeMade Pickles & Snacks</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merienda:wght@700&family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff1c1, #f9e0ae, #ffcc80);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ff6e40, #ff3d00);
+      color: white;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      background-color: white;
+      color: #ff3d00;
+      font-family: 'Pacifico', cursive;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 10px 20px;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .site-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 500;
+      position: relative;
+      font-size: 1rem;
+    }
+
+    .cart-icon {
+      position: relative;
+      display: inline-block;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -15px;
+      background: #ffe4f4;
+      color: purple;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 3px 7px;
+      border-radius: 50%;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      background-image: url('C:/Users/yuvas/OneDrive/Desktop/New folder/statics/images/bg.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 13rem 2rem;
+      opacity: 0.8;
+    }
+
+    .hero h1 {
+      font-family: 'Merienda', cursive;
+      font-size: 4rem;
+      color: #fffffe;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 4rem;
+      color: #c62828;
+      margin-bottom: 2rem;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .card {
+      background: #fffdf6;
+      border-radius: 18px;
+      border: 2px dashed #ffa000;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      width: 300px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+     .card:hover {
+      transform: translateY(-6px);
+    }
+
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      color: #d84315;
+      margin-top: 0.8rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #5d4037;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #ff6e40, #ff3d00);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+      nav a {
+        margin: 0.5rem 0;
+      }
+      .cards {
+        flex-direction: column;
+      }
+
+      .logo-area {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="logo">HP</div>
+    <div class="site-title">HomeMade Pickles & Snacks</div>
+  </div>
+  <nav>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/home.html">Home</a>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/veg_pickles.html">Veg Pickles</a>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/non_veg_pickles.html">Non-Veg Pickles</a>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/snacks.html">Snacks</a>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/logout.html">Logout</a>
+    <a href="C:/Users/yuvas/OneDrive/Desktop/New folder/templates/cart.html" class="cart-icon">
+      🛒 Cart <span class="cart-count" id="cart-count">0</span>
+    </a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Welcome to HomeMade Pickles & Snacks!</h1>
+  <p>Where Tradition Meets Taste — Homemade Goodness in Every Bite!</p>
+</section>
+
+<section class="section">
+  <h2>Top Selling Pickles</h2>
+  <div class="cards">
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/mongo_pickle.png" alt="Mango Pickle">
+      <h3>Traditional Mango Pickle</h3>
+      <p>Aged to perfection with mustard seeds and aromatic spices.</p>
+    </div>
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/chicken_pickle.png" alt="Chicken Pickle">
+      <h3>Spicy Chicken Pickle</h3>
+      <p>Succulent chicken in tangy spices and fiery masala.</p>
+    </div>
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/gongura_prawns_pickle.jpg" alt="Gongura Prawns Pickle">
+      <h3>Gongura Prawns Pickle</h3>
+      <p>Gongura, juicy prawns, and fiery flavors—crafted for authenticity.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <h2>Summer Special Snacks</h2>
+  <div class="cards">
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/aam_papad.jpg" alt="Aam Papad">
+      <h3>Mango Aam Papad</h3>
+      <p>Sweet & tangy mango leather, sun-dried to perfection.</p>
+    </div>
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/banana_chips.jpg" alt="Banana Chips">
+      <h3>Crispy Banana Chips</h3>
+      <p>Thinly sliced & sun-dried raw bananas. Perfectly crunchy!</p>
+    </div>
+    <div class="card">
+      <img src="C:\Users\yuvas\OneDrive\Desktop\New folder\statics/images/ragi_laddu.jpg" alt="Ragi Laddu">
+      <h3>Ragi Laddu</h3>
+      <p>Wholesome laddus made with ragi flour, jaggery, and ghee.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 HomeMade Pickles & Snacks. All Rights Reserved.
+</footer>
+
+<script>
+  let count = 0;
+  function addToCart() {
+    count++;
+    document.getElementById('cart-count').textContent = count;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HomeMade Pickles & Snacks - Home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Dancing+Script&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+     body::before {
+  content: "";
+  background-image: url("{{ url_for('static', filename='images/veg_background.png') }}");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.3; /* Lower opacity to make it subtle */
+  z-index: -1;
+}
+
+    
+    .logo-circle {
+      width: 50px;
+      height: 50px;
+      background-color: #c0392b;
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .navbar-brand {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: #c0392b;
+      display: flex;
+      align-items: center;
+    }
+
+    h2.section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 30px;
+      color: #e64a19;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      width: 280px;
+      padding: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      margin: 0.5rem 0 0.2rem;
+      color: #bf360c;
+    }
+
+    .card select, .card button {
+      margin-top: 0.5rem;
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .card button {
+      background-color: #e64a19;
+      color: white;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    .card button:hover {
+      background-color: #d84315;
+    }
+
+    footer {
+      background-color: #f8f9fa;
+      padding: 40px 0;
+      margin-top: 60px;
+    }
+
+    footer h5 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: #c0392b;
+    }
+
+    footer p, footer a {
+      font-size: 0.95rem;
+      color: #34495e;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-light bg-light px-4 mt-3">
+  <a class="navbar-brand" href="{{ url_for('index') }}">
+    <div class="logo-circle">HP</div>
+    HomeMade Pickles & Snacks
+  </a>
+  <div>
+    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary me-2">Home</a>
+    <a href="{{ url_for('veg_pickles') }}" class="btn btn-outline-success me-2">Veg Pickles</a>
+    <a href="{{ url_for('non_veg_pickles') }}" class="btn btn-outline-warning me-2">Non-Veg Pickles</a>
+    <a href="{{ url_for('snacks') }}" class="btn btn-outline-danger me-2">Snacks</a>
+    <a href="{{ url_for('cart') }}" class="btn btn-outline-dark me-2">Cart</a>
+    <a href="{{ url_for('logout') }}" class="btn btn-outline-primary">Logout</a>
+  </div>
+</nav>
+
+<!-- Top Selling -->
+<h2 class="section-title">Top Selling Pickles</h2>
+<div class="products">
+  {% for item in products['veg'][:3] %}
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.name }}">
+    <h3>{{ item.name }}</h3>
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+      <input type="hidden" name="id" value="{{ item.id }}">
+      <input type="hidden" name="name" value="{{ item.name }}">
+      <input type="hidden" name="image" value="images/{{ item.image }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="price" value="">
+      <label for="weight">Weight:</label>
+      <select name="weight">
+        {% for weight, price in item.prices.items() %}
+        <option value="{{ weight }}" data-price="{{ price }}">{{ weight }} - ₹{{ price }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add to Cart</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Summer Specials -->
+<h2 class="section-title">Summer Specials</h2>
+<div class="products">
+  {% for item in products['snacks'][:3] %}
+  <div class="card">
+    <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.name }}">
+    <h3>{{ item.name }}</h3>
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+      <input type="hidden" name="id" value="{{ item.id }}">
+      <input type="hidden" name="name" value="{{ item.name }}">
+      <input type="hidden" name="image" value="images/{{ item.image }}">
+      <input type="hidden" name="quantity" value="1">
+      <input type="hidden" name="price" value="">
+      <label for="weight">Weight:</label>
+      <select name="weight">
+        {% for weight, price in item.prices.items() %}
+        <option value="{{ weight }}" data-price="{{ price }}">{{ weight }} - ₹{{ price }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add to Cart</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-md-start">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5>About Us</h5>
+        <p>Traditional homemade pickles made with love and authenticity. Taste the tradition in every bite!</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('veg_pickles') }}">Veg Pickles</a></li>
+          <li><a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a></li>
+          <li><a href="{{ url_for('snacks') }}">Snacks</a></li>
+          <li><a href="{{ url_for('cart') }}">Cart</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Contact Us</h5>
+        <p>Email: support@joyofjars.com</p>
+        <p>Phone: +91-98765-43210</p>
+        <p>Address: Thummalagunta, Tirupati, AP</p>
+      </div>
+    </div>
+    <hr>
+    <p class="text-center">&copy; 2025 HomeMade Pickles & Snacks. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- JavaScript for syncing price -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.card form').forEach(form => {
+      const select = form.querySelector('select[name="weight"]');
+      const priceInput = form.querySelector('input[name="price"]');
+
+      function updatePrice() {
+        const selectedOption = select.options[select.selectedIndex];
+        const price = selectedOption.dataset.price;
+        priceInput.value = price;
+      }
+
+      updatePrice();
+      select.addEventListener('change', updatePrice);
+    });
+  });
+</script>
+
+</body>
+</html>

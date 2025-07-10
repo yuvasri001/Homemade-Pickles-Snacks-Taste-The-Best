@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - Homemade Pickles & Snacks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+
+        header {
+            background-color: #388e3c;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        nav a {
+            color: white;
+            margin-left: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        h2 {
+            color: #2e7d32;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>About Us</h1>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('veg_pickles') }}">Veg Pickles</a>
+        <a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a>
+        <a href="{{ url_for('snacks') }}">Snacks</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+
+<div class="content">
+    <h2>Welcome to Homemade Pickles & Snacks!</h2>
+    <p>
+        We bring you a delightful collection of <span class="highlight">authentic homemade pickles and traditional Indian snacks</span>, prepared with love and the finest ingredients. Every jar we sell is made using family recipes that have been passed down through generations.
+    </p>
+    <p>
+        At <span class="highlight">Homemade Pickles & Snacks</span>, we believe in preserving the taste of tradition while ensuring hygiene, freshness, and quality. Whether you're craving the spicy tang of mango pickle, the zing of lemon pickle, or the crunch of crispy snacks — we’ve got you covered!
+    </p>
+    <p>
+        Thank you for supporting our small business. Your satisfaction is our top priority!
+    </p>
+</div>
+
+</body>
+</html>

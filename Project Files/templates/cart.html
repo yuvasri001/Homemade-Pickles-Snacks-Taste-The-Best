@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart - HomeMade Pickles & Snacks</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Dancing+Script&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+         body::before {
+  content: "";
+  background-image: url("{{ url_for('static', filename='images/veg_background.png') }}");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.3; /* Lower opacity to make it subtle */
+  z-index: -1;
+}
+
+        
+
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            background-color: #c0392b;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #c0392b;
+            display: flex;
+            align-items: center;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+            color: #e64a19;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 0 auto 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .quantity-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .update-btn,
+        .remove-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .update-btn {
+            background-color: #e64a19;
+        }
+
+        .remove-btn {
+            background-color: #c0392b;
+        }
+
+        .update-btn:hover {
+            background-color: #bf360c;
+        }
+
+        .remove-btn:hover {
+            background-color: #8e0e00;
+        }
+
+        .total-section {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #c0392b;
+        }
+
+        .checkout-btn {
+            display: block;
+            margin-left: auto;
+            margin-top: 20px;
+            background-color: #e64a19;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .checkout-btn:hover {
+            background-color: #d84315;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+            padding: 50px 0;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        footer h5 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #c0392b;
+        }
+
+        footer p, footer a {
+            font-size: 0.95rem;
+            color: #34495e;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-light bg-light px-4 mt-3">
+    <a class="navbar-brand" href="{{ url_for('index') }}">
+        <div class="logo-circle">HP</div>
+        HomeMade Pickles & Snacks
+    </a>
+    <div>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary me-2">Home</a>
+        <a href="{{ url_for('veg_pickles') }}" class="btn btn-outline-success me-2">Veg Pickles</a>
+        <a href="{{ url_for('non_veg_pickles') }}" class="btn btn-outline-warning me-2">Non-Veg Pickles</a>
+        <a href="{{ url_for('snacks') }}" class="btn btn-outline-danger me-2">Snacks</a>
+        <a href="{{ url_for('cart') }}" class="btn btn-outline-dark me-2">Cart</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-primary">Logout</a>
+    </div>
+</nav>
+
+<!-- Page Title -->
+<h2>Your Shopping Cart</h2>
+
+<!-- Cart Section -->
+<div class="cart-container">
+    {% if cart and cart|length > 0 %}
+        {% set ns = namespace(total=0) %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Weight</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% set subtotal = item.price * item.quantity %}
+                    {% set ns.total = ns.total + subtotal %}
+                    <tr>
+                        <td><img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}"></td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.weight }}</td>
+                        <td>₹{{ item.price }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('update_quantity') }}" class="quantity-form">
+                                <input type="hidden" name="index" value="{{ loop.index0 }}">
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="quantity-input">
+                                <button type="submit" class="update-btn">Update</button>
+                            </form>
+                        </td>
+                        <td>₹{{ subtotal }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('remove_from_cart') }}">
+                                <input type="hidden" name="remove_index" value="{{ loop.index0 }}">
+                                <button type="submit" class="remove-btn">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="total-section">Total: ₹{{ ns.total }}</div>
+        <a href="{{ url_for('checkout') }}" class="checkout-btn">Proceed to Checkout</a>
+
+    {% else %}
+        <div class="empty-cart">Your cart is empty.</div>
+    {% endif %}
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-md-start">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5>About Us</h5>
+        <p>Traditional homemade pickles made with love and authenticity. Taste the tradition in every bite!</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('veg_pickles') }}">Veg Pickles</a></li>
+          <li><a href="{{ url_for('non_veg_pickles') }}">Non-Veg Pickles</a></li>
+          <li><a href="{{ url_for('snacks') }}">Snacks</a></li>
+          <li><a href="{{ url_for('cart') }}">Cart</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h5>Contact Us</h5>
+        <p>Email: support@joyofjars.com</p>
+        <p>Phone: +91-98765-43210</p>
+        <p>Address: Thummalagunta, Tirupati, AP</p>
+      </div>
+    </div>
+    <hr>
+    <p class="text-center">&copy; 2025 HomeMade Pickles & Snacks. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>
